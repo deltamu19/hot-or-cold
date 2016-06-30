@@ -24,14 +24,16 @@ $(document).ready(function(){
   	})
 
   	/*---Random number into a variable---*/
-	var guessNum = random(1,101);
+	var numRandom = random(1,101);
 
 	/*---Difference between user and random numbers---*/
-	var diff = Math.abs(userGuess - guessNum);
+	var diff = Math.abs(numGuess - numRandom);
 
-	var guess = function() {
-		var userGuess = $('#userGuess').val(); 
-		var html = '<li>' + userGuess + '</li>'
+	/*---User guess into variable---*/
+	var numGuess = $('#userGuess').val();
+
+	var guess = function() { 
+		var html = '<li>' + numGuess + '</li>'
 		
 		if (diff == 0) {
 			$('#feedback').html('You got it!') 	
