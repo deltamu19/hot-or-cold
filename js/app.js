@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	
 	/*--- Display information modal box ---*/
@@ -20,7 +19,7 @@ $(document).ready(function(){
 	}
 
 
-  	/*---New game---*/
+  	/*---New game function---*/
   	var newGame = function() {
   		$('#guessForm').show() 
   		document.getElementById('guessForm').reset();
@@ -31,43 +30,49 @@ $(document).ready(function(){
   		$('#count').html(numGuesses);
   	}
 
+  	/*---Click on +NewGame---*/
   	$('.new').click(function() {
   		newGame();
   	})
 
-  	/*---Random number into a variable---*/
-	
-
+  	/*---Declare variables---*/
 	var numGuess, diff, numRandom,numGuesses,lastNumGuess
 		newGame();
 
+	/*---Submit function to enter user guess---*/
 	$('form').submit(function(e) { 
+		
 		/*---stops page from refreshing---*/
 		e.preventDefault();
-		
-
+	
 		/*---User guess into variable---*/
 		numGuess = $('#userGuess').val();
 		numGuess = parseFloat(numGuess);
-
+		/*---Check if guess number is a number---*/
 		if (isNaN(numGuess) || numGuess % 1 != 0) {
 			alert('Please only enter numbers from 1 to 100')
 			return
 		} 
 		numGuesses++;
+		/*---Updates counter for every new guess---*/
 		$('#count').html(numGuesses);
 		document.getElementById('guessForm').reset();
+
 		/*---Difference between user and random numbers---*/
 		diff = Math.abs(numGuess - numRandom);
 		diff = parseInt(diff);
 
+		/*---Differences from previous guess to current guess---*/
 		diffLast = Math.abs(numGuess - lastNumGuess);
 		diffLast = parseInt(diffLast);
 
+		/*---Define value for previous guess number---*/
 		lastNumGuess = numGuess;
 
+		/*---Declare variable for list---*/
 		var html = '<li>' + numGuess + '</li>'
 		
+		/*---If statement for comparison---*/
 		if (diff >= 0 && diff < 1) {
 			$('#feedback').html('You got it!')
 			$('#guessForm').hide() 	
@@ -102,11 +107,3 @@ $(document).ready(function(){
 	});
 
 });
-
-
-//choose random number
-//user guesses a number
-//divide and conquer
-//new game function - new random number - new game witout refreshing/reloading
-
-//
