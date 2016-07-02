@@ -14,29 +14,63 @@ $(document).ready(function(){
 
   	/*---Generate Random Number for user to guess---*/
   	var random = function(min, max) {
-		return Math.random() * (max - min) + min
+  		var myNum = Math.random() * (max - min) + min
+		myNum = parseInt(myNum)
+		return myNum
 	}
 
+
   	/*---New game---*/
+  	var newGame = function() {
+  		$('#guessForm').show() 
+  		document.getElementById('guessForm').reset();
+  		$('#feedback').html('Make your Guess!')		
+  		$('#guessList').html('');
+  		numRandom = random(1,101);
+  		numGuesses = 0
+  		$('#count').html(numGuesses);
+  	}
+
   	$('.new').click(function() {
-  		document.reset();
-  		random(1,101)
+  		newGame();
   	})
 
   	/*---Random number into a variable---*/
-	var numRandom = random(1,101);
+	
 
-	/*---Difference between user and random numbers---*/
-	var diff = Math.abs(numGuess - numRandom);
+	var numGuess, diff, numRandom,numGuesses,lastNumGuess
+		newGame();
 
-	/*---User guess into variable---*/
-	var numGuess = $('#userGuess').val();
+	$('form').submit(function(e) { 
+		/*---stops page from refreshing---*/
+		e.preventDefault();
+		
 
-	var guess = function() { 
+		/*---User guess into variable---*/
+		numGuess = $('#userGuess').val();
+		numGuess = parseFloat(numGuess);
+
+		if (isNaN(numGuess) || numGuess % 1 != 0) {
+			alert('Please only enter numbers from 1 to 100')
+			return
+		} 
+		numGuesses++;
+		$('#count').html(numGuesses);
+		document.getElementById('guessForm').reset();
+		/*---Difference between user and random numbers---*/
+		diff = Math.abs(numGuess - numRandom);
+		diff = parseInt(diff);
+
+		diffLast = Math.abs(numGuess - lastNumGuess);
+		diffLast = parseInt(diffLast);
+
+		lastNumGuess = numGuess;
+
 		var html = '<li>' + numGuess + '</li>'
 		
-		if (diff == 0) {
-			$('#feedback').html('You got it!') 	
+		if (diff >= 0 && diff < 1) {
+			$('#feedback').html('You got it!')
+			$('#guessForm').hide() 	
 		}
 
 		else if (diff >= 51) {
@@ -63,11 +97,9 @@ $(document).ready(function(){
 			$('#guessList').append(html)
 			$('#feedback').html('Very Hot!')
 		}
-
-		else () {
-			$('#feedback').html('Guess with numbers please!')
-		}
-	}
+		
+	
+	});
 
 });
 
